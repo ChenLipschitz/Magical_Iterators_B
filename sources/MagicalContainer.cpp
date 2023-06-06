@@ -1,29 +1,34 @@
 #include "MagicalContainer.hpp"
 #include "MyIterator.hpp"
 #include <vector>
+#include <stdexcept>
 #include <algorithm>
 using namespace std;
 using namespace ariel;
 
 
 //----------------------------- MagicalContainer class -----------------------------//
-MagicalContainer::MagicalContainer() {
-
-}
+MagicalContainer::MagicalContainer() {}
 
 void MagicalContainer::addElement(int element) {
-
+    elements.push_back(element);
 }
 
 void MagicalContainer::removeElement(int element) {
-
+    auto itr = find(elements.begin(), elements.end(), element);
+    if (itr != elements.end()) {
+        *itr = move(elements.back()); // Move the last element to the position of the element to be removed
+        elements.pop_back(); // Remove the duplicate last element
+    } else {
+        throw runtime_error("Error- The container doesn't contain the given element");
+    }
 }
 
 size_t MagicalContainer::size() const {
     return elements.size();
 }
 
-std::vector<int> MagicalContainer::getElements() const{
+vector<int> MagicalContainer::getElements() const{
     return elements;
 }
 
@@ -46,7 +51,7 @@ MagicalContainer::AscendingIterator::~AscendingIterator() {}
 //--- Overlaoding Operators ---//
 MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator=(const AscendingIterator& other) {
     if (&container != &other.container) {
-        throw std::runtime_error("Error- Cannot use operators on different containers");
+        throw runtime_error("Error- Cannot use operators on different containers");
     }
     index = other.index;
     return *this;
@@ -55,10 +60,10 @@ MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operat
 bool MagicalContainer::AscendingIterator::operator==(const MyIterator& other) const {
     const AscendingIterator* castedOther = dynamic_cast<const AscendingIterator*>(&other);
     if (castedOther == nullptr) {
-        throw std::runtime_error("Error- Cannot use operators on different iterators type");
+        throw runtime_error("Error- Cannot use operators on different iterators type");
     }
     if (&container != &castedOther->container){
-        throw std:: runtime_error("Error- Cannot use operators on different containers");
+        throw runtime_error("Error- Cannot use operators on different containers");
     }
     return index == castedOther->index;
 }
@@ -70,10 +75,10 @@ bool MagicalContainer::AscendingIterator::operator!=(const MyIterator& other) co
 bool MagicalContainer::AscendingIterator::operator>(const MyIterator& other) const {
     const AscendingIterator* castedOther = dynamic_cast<const AscendingIterator*>(&other);
     if (castedOther == nullptr) {
-        throw std::runtime_error("Error- Cannot use operators on different iterators type");
+        throw runtime_error("Error- Cannot use operators on different iterators type");
     }
     if (&container != &castedOther->container){
-        throw std:: runtime_error("Error- Cannot use operators on different containers");
+        throw runtime_error("Error- Cannot use operators on different containers");
     }
     return index > castedOther->index;
 }
@@ -120,7 +125,7 @@ MagicalContainer::SideCrossIterator::~SideCrossIterator() {}
 //--- Overloading Operators ---//
 MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator& other) {
     if (&container != &other.container) {
-        throw std::runtime_error("Error- Cannot use operators on different containers");
+        throw runtime_error("Error- Cannot use operators on different containers");
     }
     index = other.index;
     return *this;
@@ -129,10 +134,10 @@ MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operat
 bool MagicalContainer::SideCrossIterator::operator==(const MyIterator& other) const {
     const SideCrossIterator* castedOther = dynamic_cast<const SideCrossIterator*>(&other);
     if (castedOther == nullptr) {
-        throw std::runtime_error("Error- Cannot use operators on different iterators type");
+        throw runtime_error("Error- Cannot use operators on different iterators type");
     }
     if (&container != &castedOther->container){
-        throw std:: runtime_error("Error- Cannot use operators on different containers");
+        throw runtime_error("Error- Cannot use operators on different containers");
     }
     return index == castedOther->index;
 }
@@ -144,10 +149,10 @@ bool MagicalContainer::SideCrossIterator::operator!=(const MyIterator& other) co
 bool MagicalContainer::SideCrossIterator::operator>(const MyIterator& other) const {
     const SideCrossIterator* castedOther = dynamic_cast<const SideCrossIterator*>(&other);
     if (castedOther == nullptr) {
-        throw std::runtime_error("Error- Cannot use operators on different iterators type");
+        throw runtime_error("Error- Cannot use operators on different iterators type");
     }
     if (&container != &castedOther->container){
-        throw std:: runtime_error("Error- Cannot use operators on different containers");
+        throw runtime_error("Error- Cannot use operators on different containers");
     }
     return index > castedOther->index;
 }
@@ -199,10 +204,10 @@ MagicalContainer::PrimeIterator& MagicalContainer::PrimeIterator::operator=(cons
 bool MagicalContainer::PrimeIterator::operator==(const MyIterator& other) const {
     const PrimeIterator* castedOther = dynamic_cast<const PrimeIterator*>(&other);
     if (castedOther == nullptr) {
-        throw std::runtime_error("Error- Cannot use operators on different iterators type");
+        throw runtime_error("Error- Cannot use operators on different iterators type");
     }
     if (&container != &castedOther->container){
-        throw std:: runtime_error("Error- Cannot use operators on different containers");
+        throw runtime_error("Error- Cannot use operators on different containers");
     }
     return index == castedOther->index;
 }
@@ -214,10 +219,10 @@ bool MagicalContainer::PrimeIterator::operator!=(const MyIterator& other) const 
 bool MagicalContainer::PrimeIterator::operator>(const MyIterator& other) const {
     const PrimeIterator* castedOther = dynamic_cast<const PrimeIterator*>(&other);
     if (castedOther == nullptr) {
-        throw std::runtime_error("Error- Cannot use operators on different iterators type");
+        throw runtime_error("Error- Cannot use operators on different iterators type");
     }
     if (&container != &castedOther->container){
-        throw std:: runtime_error("Error- Cannot use operators on different containers");
+        throw runtime_error("Error- Cannot use operators on different containers");
     }
     return index > castedOther->index;
 }
