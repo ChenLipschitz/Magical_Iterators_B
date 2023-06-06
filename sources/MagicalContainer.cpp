@@ -342,7 +342,13 @@ using namespace ariel;
 MagicalContainer::MagicalContainer() {}
 
 void MagicalContainer::addElement(int element) {
-    elements.push_back(element);
+        // Check if the element already exists in the container
+    if (find(elements.begin(), elements.end(), element) != elements.end()) {
+        return; // Element already exists, no need to add it again
+    }
+
+    elements.push_back(element); // Add the element to the container
+    sort(elements.begin(), elements.end()); // Sort the elements in ascending order
 }
 
 void MagicalContainer::removeElement(int element) {
@@ -411,10 +417,13 @@ bool MagicalContainer::AscendingIterator::operator<(const AscendingIterator& oth
 }
 
 int MagicalContainer::AscendingIterator::operator*() const {
-    return container.getElements().at(static_cast<size_t>(index));
+    return container.elements.at(static_cast<std::vector<int>::size_type>(index));
 }
 
 MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator++() {
+    if (index >= container.size()){
+		throw runtime_error("Error- Cannot increment, iterator is out of range");
+    }
     ++index;
     return *this;
 }
@@ -424,7 +433,7 @@ MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin()
 }
 
 MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() const{
-    return AscendingIterator(container, 0);
+    return AscendingIterator(container, container.elements.size());
 }
 
 
@@ -446,9 +455,6 @@ MagicalContainer::SideCrossIterator::~SideCrossIterator() {}
 
 //--- Overloading Operators ---//
 MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator& other) {
-    // if (other == nullptr){
-    //     throw invalid_argument("Error- got null argument");
-    // }
     if (&container != &other.container) {
         throw runtime_error("Error- Cannot use operators on different containers");
     }
@@ -486,9 +492,13 @@ int MagicalContainer::SideCrossIterator::operator*() const {
     } else {
         return elements.at(static_cast<size_t>(size - static_cast<size_t>(index) / 2 - 1));
     }
+    // return container.elements.at(static_cast<std::vector<int>::size_type>(index));
 }
 
 MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator++() {
+    if (index >= container.size()){
+		throw runtime_error("Error- Cannot increment, iterator is out of range");
+    }
     ++index;
     return *this;
 }
@@ -551,13 +561,15 @@ bool MagicalContainer::PrimeIterator::operator<(const PrimeIterator& other) cons
 }
 
 int MagicalContainer::PrimeIterator::operator*() const {
-    const vector<int>& elements = container.getElements();
-    return elements.at(static_cast<size_t>(index));
+    return container.elements.at(static_cast<std::vector<int>::size_type>(index));
 }
 
 MagicalContainer::PrimeIterator& MagicalContainer::PrimeIterator::operator++() {
-    ++index;
-    return *this;
+    if (index >= container.size()){
+		throw runtime_error("Error- Cannot increment, iterator is out of range");
+    }
+	++index;
+	return *this;
 }
 
 bool isPrime(int number) {
