@@ -65,8 +65,6 @@ namespace ariel{
 
         // SideCrossIterator class
         class SideCrossIterator : public MyIterator{
-        private:
-            bool fromStart;
 
         public:
             SideCrossIterator(MagicalContainer& container);
@@ -84,8 +82,6 @@ namespace ariel{
 
         // PrimeIterator class
         class PrimeIterator : public MyIterator{
-        private:
-
         public:
             PrimeIterator(MagicalContainer& container);
             PrimeIterator(const PrimeIterator& other);
