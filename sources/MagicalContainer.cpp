@@ -69,6 +69,7 @@ bool MagicalContainer::isPrime(int number) const
     return true;
 }
 
+//updates the prime_elements vector after adding new element to the elements vector
 void MagicalContainer::update_prime_elemtnts(){
     prime_elements.clear();
     for (size_t i = 0; i < size(); i++)
@@ -171,16 +172,13 @@ bool MagicalContainer::SideCrossIterator::operator!=(const SideCrossIterator &ot
 
 bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator &other) const {
     return (*this).operator*() > (other).operator*();
-    // return container.getElements()[index] > other.container.getElements()[index];
 }
 
 bool MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator &other) const {
-    // return container.getElements()[index] < other.container.getElements()[index];
     return (*this).operator*() < (other).operator*();
 }
 
 int MagicalContainer::SideCrossIterator::operator*() const {
-    // size_t new_index = 0;
     if (!fromStart) {
         return container.elements[container.size() - index - 1];
     }
