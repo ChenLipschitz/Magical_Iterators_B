@@ -40,39 +40,33 @@ void MagicalContainer::removeElement(int element)
 {
     // Check if the element exists in the container
     auto erasePos = find(elements.begin(), elements.end(), element);
-    if (erasePos == elements.end())
-    {
-        return;
+    if (erasePos == elements.end()) {
+        throw runtime_error("Error - element doesnt exists in the container");
     }
 
     elements.erase(erasePos);
 
-    if (isPrime(element))
-    { // if the given element is prime erase from prime_elements as well
+    if (isPrime(element)) {
+        // if the given element is prime erase from prime_elements as well
         auto primePos = find(prime_elements.begin(), prime_elements.end(), &(*erasePos));
-        if (primePos != prime_elements.end())
-        {
+        if (primePos != prime_elements.end()) {
             prime_elements.erase(primePos);
         }
     }
 }
 
-size_t MagicalContainer::size() const
-{
+size_t MagicalContainer::size() const {
     return elements.size();
 }
 
-std::vector<int> MagicalContainer::getElements() const
-{
+std::vector<int> MagicalContainer::getElements() const {
     return elements;
 }
 
-bool MagicalContainer::isPrime(int number) const
-{
+bool MagicalContainer::isPrime(int number) const {
     if (number <= 1)
         return false;
-    for (int i = 2; i * i <= number; ++i)
-    {
+    for (int i = 2; i * i <= number; ++i) {
         if (number % i == 0)
             return false;
     }
@@ -129,13 +123,11 @@ MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operat
     return *this;
 }
 
-MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() const
-{
+MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() const {
     return AscendingIterator(container, 0);
 }
 
-MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() const
-{
+MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() const {
     return AscendingIterator(container, container.size());
 }
 
@@ -171,15 +163,17 @@ bool MagicalContainer::SideCrossIterator::operator!=(const SideCrossIterator &ot
 }
 
 bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator &other) const {
-    return container.getElements()[index] > other.container.getElements()[index];
+    if (!fromStart) {
+        return container.elements[container.size() - index - 1] > other.container.getElements()[index];
+    }
+    return container.elements[index] > other.container.elements[index];
 }
 
 bool MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator &other) const {
     return container.getElements()[index] < other.container.getElements()[index];
 }
 
-int MagicalContainer::SideCrossIterator::operator*() const
-{
+int MagicalContainer::SideCrossIterator::operator*() const {
     // size_t new_index = 0;
     if (!fromStart) {
         return container.elements[container.size() - index - 1];
@@ -187,9 +181,7 @@ int MagicalContainer::SideCrossIterator::operator*() const
     return container.elements[index];
 }
 
-MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++()
-{
-    // size_t current_index;
+MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++() {
     if (index > container.size()) {
         throw runtime_error("Error - cannot increment, index out of bounds");
     }
