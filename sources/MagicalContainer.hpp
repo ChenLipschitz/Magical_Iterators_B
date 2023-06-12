@@ -17,6 +17,7 @@ namespace ariel{
         size_t size() const;
         // Helper function to check if a number is prime
         bool isPrime(int number) const;
+        void update_prime_elemtnts();
 
         class AscendingIterator {
         private:

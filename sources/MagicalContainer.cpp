@@ -16,26 +16,13 @@ void MagicalContainer::addElement(int element)
         return;
     }
 
-    // Find the insertion position using lower_bound
+    /** Find the insertion position using
+    lower_bound (=> returns an iterator pointing to the first
+    element in a sorted range that is not less than a specified value)**/
     auto insertPos = lower_bound(elements.begin(), elements.end(), element);
 
-    // Insert the element at the determined position
     elements.insert(insertPos, element);
-
-    // if (isPrime(element))
-    // {
-    //     auto insertPos = lower_bound(prime_elements.begin(), prime_elements.end(), element);
-    //     prime_elements.insert(insertPos, &element);
-    // }
-
-    prime_elements.clear();
-    for (size_t i = 0; i < size(); i++)
-    {
-        if (isPrime(elements[i]))
-        {
-            prime_elements.push_back(&elements[i]);
-        }
-    }
+    update_prime_elemtnts();
 }
 
 void MagicalContainer::removeElement(int element)
@@ -80,6 +67,17 @@ bool MagicalContainer::isPrime(int number) const
             return false;
     }
     return true;
+}
+
+void MagicalContainer::update_prime_elemtnts(){
+    prime_elements.clear();
+    for (size_t i = 0; i < size(); i++)
+    {
+        if (isPrime(elements[i]))
+        {
+            prime_elements.push_back(&elements[i]);
+        }
+    }
 }
 
 //----------------------------- AscendingIterator class -----------------------------//
