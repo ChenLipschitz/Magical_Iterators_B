@@ -22,7 +22,8 @@ namespace ariel{
         void addElement(int element);
         void removeElement(int element);
         vector<int> getElements() const;
-        int size() const;
+        vector<int*> getPrimeElements() const;
+        size_t size() const;
         bool isPrime(int number) const;     // Helper function to check if a number is prime
 
     class MyIterator{
@@ -33,19 +34,20 @@ namespace ariel{
             MagicalContainer& container;
 
         public:
-
             MyIterator(MagicalContainer& container);
             MyIterator(const MyIterator& other);
             ~MyIterator();
 
             // overlaoding operators
             MagicalContainer& getContainer();
+            void setIndex(size_t newIndex);
+            void setCurrLocation(size_t newLocation);
             MyIterator& operator=(const MyIterator& other);
             bool operator==(const MyIterator& other) const;
             bool operator!=(const MyIterator& other) const;
             bool operator>(const MyIterator& other) const;
             bool operator<(const MyIterator& other) const;
-            int operator*() const;
+            virtual int operator*() const;
     };
 
         class AscendingIterator : public MyIterator{
@@ -65,6 +67,11 @@ namespace ariel{
 
         // SideCrossIterator class
         class SideCrossIterator : public MyIterator{
+
+        private:
+        size_t forwardIndex;    // Index for iterating in forward direction
+        size_t backwardIndex;   // Index for iterating in backward direction
+        bool isForward;         // Flag to indicate the current direction of iteration
 
         public:
             SideCrossIterator(MagicalContainer& container);
@@ -89,6 +96,7 @@ namespace ariel{
 
             // overloading operator
             PrimeIterator& operator++();
+            int operator*() const override;
 
             // Get the iterator pointing to... element
             PrimeIterator begin() const;
