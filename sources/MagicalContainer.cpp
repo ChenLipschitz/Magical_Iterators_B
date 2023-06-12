@@ -272,8 +272,11 @@ bool MagicalContainer::PrimeIterator::operator<(const PrimeIterator &other) cons
 }
 
 // returns the value of the prime number at the current index
-int &MagicalContainer::PrimeIterator::operator*() const {
-    return *container.prime_elements.at(index);
+int& MagicalContainer::PrimeIterator::operator*() const {
+    if (index >= container.prime_elements.size()) {
+        throw std::runtime_error("Error - cannot dereference, iterator out of range");
+    }
+    return *(container.prime_elements[index]);
 }
 
 // increment index according to the index of the next prime element
