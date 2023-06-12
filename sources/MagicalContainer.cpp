@@ -96,58 +96,47 @@ MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer &o
 MagicalContainer::AscendingIterator::~AscendingIterator() {}
 
 //--- Overlaoding Operators ---//
-MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(const AscendingIterator &other)
-{
-    if (&this->container != &other.container)
-    {
+MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(const AscendingIterator &other) {
+   if (&this->container != &other.container) {
         throw runtime_error("Error - cannot use operators on different containers");
     }
     this->index = other.index;
     return *this;
 }
 
-bool MagicalContainer::AscendingIterator::operator==(const AscendingIterator &other) const
-{
+bool MagicalContainer::AscendingIterator::operator==(const AscendingIterator &other) const {
     return &container == &other.container && index == other.index;
 }
 
-bool MagicalContainer::AscendingIterator::operator!=(const AscendingIterator &other) const
-{
+bool MagicalContainer::AscendingIterator::operator!=(const AscendingIterator &other) const {
     return !(*this == other);
 }
 
-bool MagicalContainer::AscendingIterator::operator>(const AscendingIterator &other) const
-{
+bool MagicalContainer::AscendingIterator::operator>(const AscendingIterator &other) const {
     return index > other.index;
 }
 
-bool MagicalContainer::AscendingIterator::operator<(const AscendingIterator &other) const
-{
+bool MagicalContainer::AscendingIterator::operator<(const AscendingIterator &other) const {
     return index < other.index;
 }
 
-int MagicalContainer::AscendingIterator::operator*() const
-{
+int MagicalContainer::AscendingIterator::operator*() const {
     return container.elements[index];
 }
 
-MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator++()
-{
-    if (index >= container.elements.size())
-    {
+MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator++() {
+    if (index >= container.elements.size()) {
         throw runtime_error("Error - cannot increment, index out of range");
     }
     index++;
     return *this;
 }
 
-MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() const
-{
+MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() const {
     return AscendingIterator(container, 0);
 }
 
-MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() const
-{
+MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() const {
     return AscendingIterator(container, container.size());
 }
 
@@ -165,10 +154,8 @@ MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer &o
 MagicalContainer::SideCrossIterator::~SideCrossIterator() {}
 
 //--- Overloading Operators ---//
-MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator &other)
-{
-    if (&this->container != &other.container)
-    {
+MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator &other) {
+    if (&this->container != &other.container) {
         throw runtime_error("Error - cannot use operators on different containers");
     }
     index = other.index;
@@ -176,40 +163,33 @@ MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operat
     return *this;
 }
 
-bool MagicalContainer::SideCrossIterator::operator==(const SideCrossIterator &other) const
-{
+bool MagicalContainer::SideCrossIterator::operator==(const SideCrossIterator &other) const {
     return index == other.index && fromStart == other.fromStart;
 }
 
-bool MagicalContainer::SideCrossIterator::operator!=(const SideCrossIterator &other) const
-{
+bool MagicalContainer::SideCrossIterator::operator!=(const SideCrossIterator &other) const {
     return !(*this == other);
 }
 
-bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator &other) const
-{
+bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator &other) const {
     return (*this).operator*() > (other).operator*();
     // return container.getElements()[index] > other.container.getElements()[index];
 }
 
-bool MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator &other) const
-{
+bool MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator &other) const {
     // return container.getElements()[index] < other.container.getElements()[index];
     return (*this).operator*() < (other).operator*();
 }
 
-int MagicalContainer::SideCrossIterator::operator*() const
-{
+int MagicalContainer::SideCrossIterator::operator*() const {
     // size_t new_index = 0;
-    if (!fromStart)
-    {
+    if (!fromStart) {
         return container.elements[container.size() - index - 1];
     }
     return container.elements[index];
 }
 
-MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++()
-{
+MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++() {
     st++;
     if (st == container.size()+1) {
         throw runtime_error("Error - cannot increment, index out of bounds");
