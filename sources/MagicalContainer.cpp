@@ -78,6 +78,9 @@ void MagicalContainer::update_prime_elemtnts(){
     }
 }
 
+
+
+
 //----------------------------- AscendingIterator class -----------------------------//
 
 MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer &container_, size_t index_)
@@ -90,6 +93,7 @@ MagicalContainer::AscendingIterator::AscendingIterator(const MagicalContainer &o
     : container(other), index(0) {}
 
 MagicalContainer::AscendingIterator::~AscendingIterator() {}
+
 
 //--- Overlaoding Operators ---//
 MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator=(const AscendingIterator &other) {
@@ -139,6 +143,9 @@ MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() c
     return AscendingIterator(container, container.size());
 }
 
+
+
+
 //----------------------------- SideCrossIterator class -----------------------------//
 
 MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer &container_, size_t index_, bool fromStart_)
@@ -151,6 +158,7 @@ MagicalContainer::SideCrossIterator::SideCrossIterator(const MagicalContainer &o
     : container(other), index(0), fromStart(true) {}
 
 MagicalContainer::SideCrossIterator::~SideCrossIterator() {}
+
 
 //--- Overloading Operators ---//
 MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator &other) {
@@ -220,6 +228,9 @@ void MagicalContainer::SideCrossIterator::update_fromStart() {
     this->fromStart = !fromStart;
 }
 
+
+
+
 //----------------------------- PrimeIterator class -----------------------------//
 MagicalContainer::PrimeIterator::PrimeIterator(const MagicalContainer &container_, size_t index_)
     : container(container_), index(index_) {}
@@ -231,6 +242,7 @@ MagicalContainer::PrimeIterator::PrimeIterator(const MagicalContainer &other)
     : container(other), index(0) {}
 
 MagicalContainer::PrimeIterator::~PrimeIterator() {}
+
 
 //--- Overlaoding Operators ---//
 MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator=(const PrimeIterator &other) {
