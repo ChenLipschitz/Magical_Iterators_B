@@ -191,7 +191,8 @@ bool MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator &oth
 int MagicalContainer::SideCrossIterator::operator*() const {
     if (!fromStart) {
         // if the returned element is from the right section
-        return container.elements[container.size() - index - 1];
+        size_t newIndex = container.size() - index - 1;
+        return container.elements[newIndex];
     }
     return container.elements[index];
 }
