@@ -15,7 +15,6 @@ namespace ariel{
         void removeElement(int element);
         vector<int> getElements() const;
         size_t size() const;
-        // Helper function to check if a number is prime
         bool isPrime(int number) const;
         void update_prime_elemtnts();
 
