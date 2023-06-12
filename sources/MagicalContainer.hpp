@@ -50,6 +50,7 @@ namespace ariel{
             const MagicalContainer& container;
             size_t index;
             bool fromStart;
+            int st=0;
 
         public:
             SideCrossIterator(const MagicalContainer& container, size_t index, bool fromStart);
