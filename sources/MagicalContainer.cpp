@@ -28,7 +28,6 @@ void MagicalContainer::addElement(int element)
 
 // removes element if exists in the container
 void MagicalContainer::removeElement(int element) {
-    // Check if the element exists in the container
     auto erasePos = find(elements.begin(), elements.end(), element);
     if (erasePos == elements.end()) {
         throw runtime_error("Error - element doesnt exist in the container");
@@ -293,5 +292,6 @@ MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::begin() const {
 
 // returns the last prime element 
 MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::end() const {
-    return PrimeIterator(container, container.prime_elements.size());
+    size_t lastElementIndex = container.prime_elements.size();
+    return PrimeIterator(container, lastElementIndex);
 }
