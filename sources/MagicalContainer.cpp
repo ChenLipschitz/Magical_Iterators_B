@@ -12,8 +12,7 @@ MagicalContainer::MagicalContainer() {}
 void MagicalContainer::addElement(int element)
 {
     // Check if the element already exists in the container
-    if (find(elements.begin(), elements.end(), element) != elements.end())
-    {
+    if (find(elements.begin(), elements.end(), element) != elements.end()){
         return;
     }
 
@@ -68,10 +67,8 @@ bool MagicalContainer::isPrime(int number) const {
 //updates the prime_elements vector after adding new element to the elements vector
 void MagicalContainer::update_prime_elemtnts(){
     prime_elements.clear();
-    for (size_t i = 0; i < size(); i++)
-    {
-        if (isPrime(elements[i]))
-        {
+    for (size_t i = 0; i < size(); i++){
+        if (isPrime(elements[i])){
             prime_elements.push_back(&elements[i]);
         }
     }
@@ -218,12 +215,11 @@ MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin()
 
 // returns the last element according to side cross order
 MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() const {
-// according to side cross order the last element will be the element in the middle of the vector
-    size_t lastElementIndex = container.elements.size()/2;
-    if (container.elements.size() % 2 == 0) {
-        return SideCrossIterator(container, lastElementIndex, true);
-    }
-    return SideCrossIterator(container, lastElementIndex, false);
+    // Calculate the index of the last element according to side cross order
+    size_t lastElementIndex = container.elements.size() / 2;
+    bool fromStart = (container.elements.size() % 2 == 0) ? true : false;
+    
+    return SideCrossIterator(container, lastElementIndex, fromStart);
 }
 
 // updates the fromStart attribute to be the opposite
