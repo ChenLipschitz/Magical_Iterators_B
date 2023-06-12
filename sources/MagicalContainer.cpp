@@ -31,7 +31,7 @@ void MagicalContainer::removeElement(int element)
     auto erasePos = find(elements.begin(), elements.end(), element);
     if (erasePos == elements.end())
     {
-        throw runtime_error("Error - element doesnt exists in the container");
+        throw runtime_error("Error - element doesnt exist in the container");
     }
 
     elements.erase(erasePos);
