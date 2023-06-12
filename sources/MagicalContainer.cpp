@@ -178,10 +178,12 @@ bool MagicalContainer::SideCrossIterator::operator!=(const SideCrossIterator &ot
     return !(*this == other);
 }
 
+// got the help of GPT
 bool MagicalContainer::SideCrossIterator::operator>(const SideCrossIterator &other) const {
     return (*this).operator*() > (other).operator*();
 }
 
+// got the help of GPT
 bool MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator &other) const {
     return (*this).operator*() < (other).operator*();
 }
@@ -196,8 +198,8 @@ int MagicalContainer::SideCrossIterator::operator*() const {
 
 // preincrement iterator according to the sideCross order 
 MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++() {
-    st++;
-    if (st == container.size()+1) {
+    num_of_increments++;
+    if (num_of_increments == container.size()+1) {
         throw runtime_error("Error - cannot increment, index out of bounds");
     }
     // increment only if the current element is from the right side of the container

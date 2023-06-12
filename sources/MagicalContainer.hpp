@@ -51,7 +51,14 @@ namespace ariel{
             const MagicalContainer& container;
             size_t index;
             bool fromStart;
-            int st=0;
+            int num_of_increments = 0; 
+            /* NOTE - The reason we need num_of_increments is that index alone does not
+                provide enough information to determine the side-cross pattern of iteration.
+                The num_of_increments variable allows the iterator to alternate between the left and right sides of the container as it progresses,
+                regardless of the current index value.
+                By incrementing num_of_increments and using it as a condition in the operator++ method,
+                the iterator knows when it has completed iterating through all the elements
+                in the container according to the side-cross pattern.*/
 
         public:
             SideCrossIterator(const MagicalContainer& container, size_t index, bool fromStart);
