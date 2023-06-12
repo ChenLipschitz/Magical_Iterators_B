@@ -8,6 +8,7 @@ using namespace ariel;
 //----------------------------- MagicalContainer class -----------------------------//
 MagicalContainer::MagicalContainer() {}
 
+// adds an element if is not already in the container
 void MagicalContainer::addElement(int element)
 {
     // Check if the element already exists in the container
@@ -25,44 +26,40 @@ void MagicalContainer::addElement(int element)
     update_prime_elemtnts();
 }
 
-void MagicalContainer::removeElement(int element)
-{
+// removes element if exists in the container
+void MagicalContainer::removeElement(int element) {
     // Check if the element exists in the container
     auto erasePos = find(elements.begin(), elements.end(), element);
-    if (erasePos == elements.end())
-    {
+    if (erasePos == elements.end()) {
         throw runtime_error("Error - element doesnt exist in the container");
     }
 
     elements.erase(erasePos);
 
-    if (isPrime(element))
-    {
+    if (isPrime(element)) {
         // if the given element is prime erase from prime_elements as well
         auto primePos = find(prime_elements.begin(), prime_elements.end(), &(*erasePos));
-        if (primePos != prime_elements.end())
-        {
+        if (primePos != prime_elements.end()){
             prime_elements.erase(primePos);
         }
     }
 }
 
-size_t MagicalContainer::size() const
-{
+// returns the size of the elements in the container
+size_t MagicalContainer::size() const {
     return elements.size();
 }
 
-std::vector<int> MagicalContainer::getElements() const
-{
+// return the elements vector
+std::vector<int> MagicalContainer::getElements() const {
     return elements;
 }
 
-bool MagicalContainer::isPrime(int number) const
-{
+// returns true if a number is prime, false else
+bool MagicalContainer::isPrime(int number) const {
     if (number <= 1)
         return false;
-    for (int i = 2; i * i <= number; ++i)
-    {
+    for (int i = 2; i * i <= number; ++i){
         if (number % i == 0)
             return false;
     }
@@ -132,10 +129,12 @@ MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operat
     return *this;
 }
 
+// return the first element according to the ascending order
 MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::begin() const {
     return AscendingIterator(container, 0);
 }
 
+// return the last element
 MagicalContainer::AscendingIterator MagicalContainer::AscendingIterator::end() const {
     return AscendingIterator(container, container.size());
 }
@@ -181,6 +180,7 @@ bool MagicalContainer::SideCrossIterator::operator<(const SideCrossIterator &oth
 
 int MagicalContainer::SideCrossIterator::operator*() const {
     if (!fromStart) {
+        // if the returned element is from the right section
         return container.elements[container.size() - index - 1];
     }
     return container.elements[index];
@@ -193,7 +193,7 @@ MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operat
         throw runtime_error("Error - cannot increment, index out of bounds");
     }
     // increment only if the current element is from the right side of the container
-    // the idea is to incremet index evrey 2 elements, the operator* method calculates the value according to the index
+    // the idea is to incremet the index evrey 2 elements, the operator* method calculates the value according to the index
     if (!fromStart) {
         ++index;
     }
@@ -201,17 +201,21 @@ MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operat
     return *this;
 }
 
+// returns the first element
 MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin() const {
     return SideCrossIterator(container, 0, true);
 }
 
+// returns the last element according to side cross order
 MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() const {
+    // according to side cross order the last element will be the element in the middle of the vector
     if (container.elements.size() % 2 == 0) {
         return SideCrossIterator(container, container.elements.size() / 2, true);
     }
     return SideCrossIterator(container, container.elements.size() / 2, false);
 }
 
+// updates the fromStart attribute to be the opposite
 void MagicalContainer::SideCrossIterator::update_fromStart() {
     this->fromStart = !fromStart;
 }
@@ -252,10 +256,12 @@ bool MagicalContainer::PrimeIterator::operator<(const PrimeIterator &other) cons
     return index < other.index;
 }
 
+// returns the value of the prime number at the current index
 int &MagicalContainer::PrimeIterator::operator*() const {
     return *container.prime_elements.at(index);
 }
 
+// increment index according to the index of the next prime element
 MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator++() {
     if (index >= container.prime_elements.size()) {
         throw runtime_error("Error - cannot increment, index out of range");
@@ -264,10 +270,12 @@ MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator++() {
     return *this;
 }
 
+// returns the first prime element
 MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::begin() const {
     return PrimeIterator(container, 0);
 }
 
+// returns the last prime element 
 MagicalContainer::PrimeIterator MagicalContainer::PrimeIterator::end() const {
     return PrimeIterator(container, container.prime_elements.size());
 }
