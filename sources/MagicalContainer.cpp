@@ -200,7 +200,7 @@ int MagicalContainer::SideCrossIterator::operator*() const {
 // preincrement iterator according to the sideCross order 
 MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++() {
     num_of_increments++;
-    if (num_of_increments == container.size()+1) {
+    if (num_of_increments >= container.size()+1) {
         throw runtime_error("Error - cannot increment, index out of bounds");
     }
     // increment only if the current element is from the right side of the container
