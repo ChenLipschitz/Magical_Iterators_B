@@ -219,11 +219,12 @@ MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::begin()
 
 // returns the last element according to side cross order
 MagicalContainer::SideCrossIterator MagicalContainer::SideCrossIterator::end() const {
-    // according to side cross order the last element will be the element in the middle of the vector
+// according to side cross order the last element will be the element in the middle of the vector
+    size_t lastElementIndex = container.elements.size()/2;
     if (container.elements.size() % 2 == 0) {
-        return SideCrossIterator(container, container.elements.size() / 2, true);
+        return SideCrossIterator(container, lastElementIndex, true);
     }
-    return SideCrossIterator(container, container.elements.size() / 2, false);
+    return SideCrossIterator(container, lastElementIndex, false);
 }
 
 // updates the fromStart attribute to be the opposite
