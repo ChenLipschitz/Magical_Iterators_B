@@ -4,13 +4,6 @@
 #include <iterator>
 using namespace std;
 namespace ariel{
-
-    enum class IteratorType {
-        Ascending,
-        SideCross,
-        Prime
-    };
-
     class MagicalContainer {
     private:
         vector<int> elements;
@@ -18,45 +11,31 @@ namespace ariel{
 
     public:
         MagicalContainer();
-        MagicalContainer& operator=(const MagicalContainer& other);
         void addElement(int element);
         void removeElement(int element);
         vector<int> getElements() const;
-        vector<int*> getPrimeElements() const;
         size_t size() const;
-        bool isPrime(int number) const;     // Helper function to check if a number is prime
+        // Helper function to check if a number is prime
+        bool isPrime(int number) const;
 
-    class MyIterator{
-        protected:
+        class AscendingIterator {
+        private:
+            const MagicalContainer& container;
             size_t index;
-            size_t index_current_location;
-            enum IteratorType itr_type;
-            MagicalContainer& container;
 
         public:
-            MyIterator(MagicalContainer& container);
-            MyIterator(const MyIterator& other);
-            ~MyIterator();
-
-            // overlaoding operators
-            MagicalContainer& getContainer();
-            void setIndex(size_t newIndex);
-            void setCurrLocation(size_t newLocation);
-            MyIterator& operator=(const MyIterator& other);
-            bool operator==(const MyIterator& other) const;
-            bool operator!=(const MyIterator& other) const;
-            bool operator>(const MyIterator& other) const;
-            bool operator<(const MyIterator& other) const;
-            virtual int operator*() const;
-    };
-
-        class AscendingIterator : public MyIterator{
-        public:
-            AscendingIterator(MagicalContainer& container);
+            AscendingIterator(const MagicalContainer& container, size_t index);
             AscendingIterator(const AscendingIterator& other);
+            AscendingIterator(const MagicalContainer& other);
             ~AscendingIterator();
 
             // overlaoding operators
+            AscendingIterator& operator=(const AscendingIterator& other);
+            bool operator==(const AscendingIterator& other) const;
+            bool operator!=(const AscendingIterator& other) const;
+            bool operator>(const AscendingIterator& other) const;
+            bool operator<(const AscendingIterator& other) const;
+            int operator*() const;
             AscendingIterator& operator++();
 
             // Get the iterator pointing to... element
@@ -66,20 +45,27 @@ namespace ariel{
 
 
         // SideCrossIterator class
-        class SideCrossIterator : public MyIterator{
-
+        class SideCrossIterator {
         private:
-        size_t forwardIndex;    // Index for iterating in forward direction
-        size_t backwardIndex;   // Index for iterating in backward direction
-        bool isForward;         // Flag to indicate the current direction of iteration
+            const MagicalContainer& container;
+            size_t index;
+            bool fromStart;
 
         public:
-            SideCrossIterator(MagicalContainer& container);
+            SideCrossIterator(const MagicalContainer& container, size_t index, bool fromStart);
             SideCrossIterator(const SideCrossIterator& other);
+            SideCrossIterator(const MagicalContainer& other);
             ~SideCrossIterator();
 
             // overloading operator
+            SideCrossIterator& operator=(const SideCrossIterator& other);
+            bool operator==(const SideCrossIterator& other) const;
+            bool operator!=(const SideCrossIterator& other) const;
+            bool operator>(const SideCrossIterator& other) const;
+            bool operator<(const SideCrossIterator& other) const;
+            int operator*() const;
             SideCrossIterator& operator++();
+            void update_fromStart();
 
             // Get the iterator pointing to... element
             SideCrossIterator begin() const;
@@ -88,15 +74,25 @@ namespace ariel{
 
 
         // PrimeIterator class
-        class PrimeIterator : public MyIterator{
+        class PrimeIterator {
+        private:
+            const MagicalContainer& container;
+            size_t index;
+
         public:
-            PrimeIterator(MagicalContainer& container);
+            PrimeIterator(const MagicalContainer& container, size_t index);
             PrimeIterator(const PrimeIterator& other);
+            PrimeIterator(const MagicalContainer& other);
             ~PrimeIterator();
 
             // overloading operator
+            PrimeIterator& operator=(const PrimeIterator& other);
+            bool operator==(const PrimeIterator& other) const;
+            bool operator!=(const PrimeIterator& other) const;
+            bool operator>(const PrimeIterator& other) const;
+            bool operator<(const PrimeIterator& other) const;
+            int &operator*() const;
             PrimeIterator& operator++();
-            int operator*() const override;
 
             // Get the iterator pointing to... element
             PrimeIterator begin() const;
