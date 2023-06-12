@@ -196,17 +196,17 @@ int MagicalContainer::SideCrossIterator::operator*() const {
     return container.elements[index];
 }
 
-// preincrement iterator according to the sideCross order 
-MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++() {
+MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator++() {
     num_of_increments++;
-    if (num_of_increments >= container.size()+1) {
-        throw runtime_error("Error - cannot increment, index out of bounds");
+    if (num_of_increments >= container.size() + 1) {
+        throw std::runtime_error("Error - cannot increment, index out of bounds");
     }
+    
     // increment only if the current element is from the right side of the container
-    // the idea is to incremet the index evrey 2 elements, the operator* method calculates the value according to the index
-    if (!fromStart) {
+    if (num_of_increments % 2 == 0) {
         ++index;
     }
+    
     update_fromStart();
     return *this;
 }
