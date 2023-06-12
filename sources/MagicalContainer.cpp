@@ -123,6 +123,7 @@ int MagicalContainer::AscendingIterator::operator*() const {
     return container.elements[index];
 }
 
+//preincrement iterator according to the elements ascending order
 MagicalContainer::AscendingIterator &MagicalContainer::AscendingIterator::operator++() {
     if (index >= container.elements.size()) {
         throw runtime_error("Error - cannot increment, index out of range");
@@ -185,11 +186,14 @@ int MagicalContainer::SideCrossIterator::operator*() const {
     return container.elements[index];
 }
 
+// preincrement iterator according to the sideCross order 
 MagicalContainer::SideCrossIterator &MagicalContainer::SideCrossIterator::operator++() {
     st++;
     if (st == container.size()+1) {
         throw runtime_error("Error - cannot increment, index out of bounds");
     }
+    // increment only if the current element is from the right side of the container
+    // the idea is to incremet index evrey 2 elements, the operator* method calculates the value according to the index
     if (!fromStart) {
         ++index;
     }
